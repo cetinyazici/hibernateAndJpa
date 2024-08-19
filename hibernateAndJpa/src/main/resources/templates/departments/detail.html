@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Department Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css"> <!-- Özel stil dosyanız -->
+</head>
+<body>
+    <div class="container mt-5">
+        <header class="mb-4">
+            <h1>Department Details</h1>
+        </header>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">
+                    Department ID: <span th:text="${department.id}"></span>
+                </h2>
+                <p class="card-text">
+                    <strong>Name:</strong> <span th:text="${department.name}"></span>
+                </p>
+                <p class="card-text">
+                    <strong>Location:</strong> <span th:text="${department.location}"></span>
+                </p>
+                <p class="card-text">
+                    <strong>Head of Department:</strong> <span th:text="${department.head_of_department}"></span>
+                </p>
+                <a href="/departments/list" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

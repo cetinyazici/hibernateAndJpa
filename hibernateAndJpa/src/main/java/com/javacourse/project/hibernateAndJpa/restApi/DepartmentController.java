@@ -1,24 +1,19 @@
 package com.javacourse.project.hibernateAndJpa.restApi;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.javacourse.project.hibernateAndJpa.Business.IDepartmentService;
 import com.javacourse.project.hibernateAndJpa.Entities.Department;
 
-import jakarta.annotation.PostConstruct;
-
-@RestController
-@RequestMapping("/api")
+@Controller
+@RequestMapping("/departments")
 public class DepartmentController {
-
 	private IDepartmentService departmentService;
 
 	@Autowired
@@ -26,29 +21,56 @@ public class DepartmentController {
 		this.departmentService = departmentService;
 	}
 
-	@GetMapping("/departments")
-	public List<Department> get() {
-		return departmentService.getAll();
+	@GetMapping("/list")
+	public String listDepartments(Model model) {
+		model.addAttribute("departments", departmentService.getAll());
+		return "departments/list";
 	}
 
-	@GetMapping("/departments/{id}")
-	public Department getById(@PathVariable int id) {
-		return departmentService.getById(id);
+	@GetMapping("/add")
+	public String showAddForm(Model model) {
+		model.addAttribute("department", new Department());
+		return "departments/add";
 	}
 
 	@PostMapping("/add")
-	public void add(@RequestBody Department department) {
+	public String addDepartment(Department department) {
 		departmentService.add(department);
+		return "redirect:/departments/list";
 	}
 
-	@PostMapping("/update")
-	public void update(@RequestBody Department department) {
+	@GetMapping("/edit/{id}")
+	public String showEditForm(@PathVariable int id, Model model) {
+		Department department = departmentService.getById(id);
+		model.addAttribute("department", department);
+		return "departments/edit";
+	}
+
+	@PostMapping("/edit/{id}")
+	public String updateDepartment(@PathVariable int id, Department department) {
+		department.setId(id);
 		departmentService.update(department);
+		return "redirect:/departments/list";
 	}
 
-	@PostMapping("/delete")
-	public void delete(@RequestBody Department department) {
-		departmentService.delete(department);
+	@GetMapping("/detail/{id}")
+	public String showDetail(@PathVariable int id, Model model) {
+		Department department = departmentService.getById(id);
+		if (department != null) {
+			model.addAttribute("department", department);
+			return "departments/detail";
+		} else {
+			return "error/404";
+		}
+	}
+
+	@PostMapping("/delete/{id}")
+	public String deleteDepartment(@PathVariable int id) {
+		Department department = departmentService.getById(id);
+		if (department != null) {
+			departmentService.delete(department);
+		}
+		return "redirect:/departments/list";
 	}
 
 }
