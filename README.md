@@ -53,3 +53,10 @@
    mvn spring-boot:run
 
    ```
+
+### Project images
+
+![hibernateAndJpa](readmeImages/1.png)
+![hibernateAndJpa](readmeImages/2.png)
+![hibernateAndJpa](readmeImages/3.png)
+![hibernateAndJpa](readmeImages/4.png)
